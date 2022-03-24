@@ -1,0 +1,50 @@
+{% extends 'base.html' %}<!--Наследование шаблона-->
+<!--Главная страница-->
+{% block title %}
+МеталлоРемонт
+{% endblock %}<!--Заголовок страницы-->
+
+{% block body %}
+{% if sess %}
+<h1>Привет {{sess[0]}}</h1>
+{% endif %}
+<div class="text-center">
+<main role="main" class="inner cover">
+        <h1 class="cover-heading">МеталлоРемонт</h1>
+    <div class="container"><img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Миниатюра [100% x225]" style="height: 600px; width: 100%; display: block;" src="https://cdn.pixabay.com/photo/2012/02/22/20/02/tools-15539_960_720.jpg" data-holder-rendered="true"></div>
+        <p class="lead">Один из лучших сервисов, который предоставляет гарантию 100% качества, отзывчивый персонал, а так же хорошие продукты.
+            <br> Мы предоставляем разные товары и услуги, которые вы можете просмотреть в нашем каталоге.</p>
+        <p class="lead">
+          <a href="/catalog" class="btn btn-lg btn-secondary">Перейти в каталог</a>
+        </p>
+      </main>
+</div>
+{% if shops%}<!--Если есть в кэше магазины-->
+<div class="text-center">
+<main role="main" class="inner cover">
+        <h1 class="cover-heading">Адреса магазинов:</h1>
+    {% for i in shops %}
+        <p class="lead">{{ i[0] }}</p>
+        {% endfor %}
+        <p class="lead">
+          <a href="/catalog" class="btn btn-lg btn-secondary">Перейти в каталог</a>
+        </p>
+</main>
+</div>
+{% endif %}
+{% if employers%}<!--Если есть в кэшэ работники-->
+<div class="text-center">
+<main role="main" class="inner cover">
+        <h1 class="cover-heading">Контактная информация:</h1>
+    {% for i in employers %}
+        {% if i[0] != 'temp' %}
+        <p class="lead">Имя {{ i[0] }}, Телефон {{ i[1] }}</p>
+        {% endif %}
+        {% endfor %}
+        <p class="lead">
+          <a href="/catalog" class="btn btn-lg btn-secondary">Перейти в каталог</a>
+        </p>
+</main>
+</div>
+{% endif %}
+{% endblock %}

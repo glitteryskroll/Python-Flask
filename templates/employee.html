@@ -1,0 +1,45 @@
+{% extends 'base.html' %}<!--Наследует шаблон-->
+{% block body %}
+<div class="container">
+{% if tip == 'login'%}<!--Если происходит авторизация-->
+    <div class="container text-center">
+  <h2>Login</h2>
+          <div class="d-flex justify-content-center">
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('employee') }}" method=post>
+    <dl>
+      <dt>Username:
+      <dd><input type=text name=username>
+      <dt>Password:
+      <dd><input type=password name=password>
+      <dd><input type=submit value=Login>
+    </dl>
+  </form>
+                  </div>
+  </div>
+{% endif%}
+<!--#Панель работы-->
+{% if tip == 'panel'%}<!--Если личный кабинет работника-->
+    <h1>Привет, работник {{ session['employee'][0] }}</h1>
+    <a class="p-2 text-dark flex-fill" href="/panel/add_service">Добавить услуги:</a><br>
+    <a class="p-2 text-dark flex-fill" href="/panel/add_item">Добавить товары:</a>
+    <a class="p-2 text-dark flex-fill" href="/panel/refresh">Обновить базу данных:</a>
+        <dl>
+        <dt>CПИСОК МОИХ ЗАКАЗОВ</dt>
+            {% if orders2%}
+        {% for i in orders2%}
+        <dt>Номер заказа - {{ i[1]}}, Статус заказа {{ i[2] }}, Логин клиента - {{i[3]}}, Цена {{ i[4] }}, Телефон клиента: {{ i[5] }}</dt>
+        <a href="/panel/orders/{{ i[1] }}">Подробнее об заказе</a>
+        {% endfor%}
+            {% endif %}
+    </dl>
+    <dl>
+        <dt>CПИСОК СВОБОДНЫХ ЗАКАЗОВ:</dt>
+        {% for i in orders%}
+        <dt>Номер заказа - {{ i[1]}}, Название клиента - {{i[2]}}</dt>
+        <a href="/panel/orders/{{ i[1] }}">Подробнее об заказе</a>
+        {% endfor%}
+    </dl>
+{% endif %}
+</div>
+{% endblock %}

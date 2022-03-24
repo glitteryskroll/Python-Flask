@@ -1,0 +1,56 @@
+{% extends 'base.html' %}<!--Наследование шаблона-->
+
+{% block title %}
+Личный Кабинет
+{% endblock %}
+{% block body %}
+{% if tip == 'cabinet'%}<!--Если тип равен личный кабинет-->
+<div class="container">
+    <h1>Привет, {{balance[0][1]}} <br> Логин - {{ session['logged_in'][0] }}</h1><!--Показывает Фамилию Имя и логин-->
+    <h1>Ваш баланс: {{balance[0][0]}}</h1>
+    <h1><a href="/balance">Пополнить баланс</a></h1><!--Ссылка на пополнение-->
+    <h1><a href="/logout">Выход</a></h1><!--ссылка на выход-->
+    <h1 class="bg-secondary">Заказы:</h1>
+
+    {% if orders %}<!--Отображение заказов-->
+    {% for i in orders%}
+    {% if i[0] == 'temp'%}<!--Если работника нет-->
+    <h4>Работник - нет, телефон - нет, Статус {{i[2]}}, Цена - {{i[3]}}, id заказа - {{i[1]}},</h4>
+    {% endif %}
+    {% if i[0] != 'temp'%}<!--Если есть-->
+    <h4>Работник - {{ i[0]}}, телефон - {{ i[4] }}, Статус {{i[2]}}, Цена - {{i[3]}}, id заказа - {{i[1]}}</h4>
+    {% endif %}
+    {% endfor%}
+    {% endif %}
+    <h1 class="bg-success">Изменить данные:</h1>
+    <form action="{{ url_for('change') }}" method=post><!--Активирует функцию по смене данных об клиентн-->
+        <dl>
+            <dt>ФИО:
+            <dd><input type=text name=fio>
+            <dt>Логин:
+            <dd><input type=text name=login>
+            <dt>Пароль:
+            <dd><input type=text name=password>
+            <dt>Телефон:
+            <dd><input type=text name=telephone>
+            <dd><input type=submit value=Изменить>
+        </dl>
+    </form>
+    <h1 class="bg-warning">Удалить страничку</h1>
+    <form action="{{ url_for('delete') }}" method=post>
+        <dd><input type=submit value=Удалить>
+    </form>
+</div>
+{% endif %}
+{% if tip == 'balance'%}<!--пополнение баланса-->
+<div class="d-flex justify-content-center">
+     <form action="{{ url_for('balance') }}" method=post><!--посылает в функцию пополнения баланса-->
+        <dl>
+            <dt>Сумма:
+            <dd><input type=text name=balance>
+            <dd><input type=submit value=Пополнить>
+        </dl>
+    </form>
+</div>
+{% endif %}
+{% endblock %}

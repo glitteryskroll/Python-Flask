@@ -1,0 +1,86 @@
+{% extends 'base.html' %}<!--Наследует шаблон-->
+
+{% block title %}
+Каталог
+{% endblock %}
+<!--Здесь отображаются товары и услуги-->
+{% block body %}
+<div class="container justify-content-center">
+    {% if sess %}
+
+<h1>Привет, {{sess[0]}}</h1>
+{% endif %}
+    <h1>Все товары</h1>
+    <div class="album py-5 bg-light">
+        <div class="container">
+          <div class="row">
+                  {% for i in items %}
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Миниатюра [100% x225]" style="height: 225px; width: 100%; display: block;" src="https://brilliant24.ru/files/cat/template_01.png" data-holder-rendered="true">
+                <div class="card-body">
+                  <p class="card-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ i[0]}}
+                  </font><font style="vertical-align: inherit;"><br>Цена {{ i[2] }}р.</font></font></p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><a href=item/{{ i[1] }}>Купить</a></font></font></button>
+<!--                      <button type="button" class="btn btn-sm btn-outline-secondary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Редактировать</font></font></button>-->
+                    </div>
+    <!--                    <small class="text-muted"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">9 минут</font></font></small>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+                    {% endfor %}
+          </div>
+        </div>
+      </div>
+<!--<div class="d-flex flex-row">-->
+<!--    {% for i in items %}-->
+<!--    <ul>-->
+<!--        <li>Название - {{ i[0]}}</li>-->
+<!--        <li>id - {{ i[1]}}</li>-->
+<!--        <li>количество - {{ i[2]}}</li>-->
+<!--        <li>Цена - {{ i[3]}}</li>-->
+<!--        <a href=item/{{ i[1] }}>Купить</a>-->
+<!--    </ul>-->
+<!--{% endfor %}-->
+<!--</div>-->
+<h1>Все услуги</h1>
+        <div class="album py-5 bg-light">
+        <div class="container">
+          <div class="row">
+                  {% for i in service %}
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Миниатюра [100% x225]" style="height: 225px; width: 100%; display: block;" src="https://brilliant24.ru/files/cat/template_01.png" data-holder-rendered="true">
+                <div class="card-body">
+                  <p class="card-text"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{ i[0]}}
+                  </font><font style="vertical-align: inherit;"><br>Цена {{ i[2] }}р.</font></font></p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><a href=service/{{ i[1] }}>Купить</a></font></font></button>
+<!--                      <button type="button" class="btn btn-sm btn-outline-secondary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Редактировать</font></font></button>-->
+                    </div>
+    <!--                    <small class="text-muted"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">9 минут</font></font></small>-->
+                  </div>
+                </div>
+              </div>
+            </div>
+                    {% endfor %}
+          </div>
+        </div>
+      </div>
+<!--<div class="d-flex flex-row">-->
+<!--{% for i in service %}-->
+<!--    <ul>-->
+<!--        <li>Название - {{ i[0]}}</li>-->
+<!--        <li>id - {{ i[1]}}</li>-->
+<!--        <li>количество - {{ i[2]}}</li>-->
+<!--        <li>Цена - {{ i[3]}}</li>-->
+<!--        <a href=service/{{ i[1] }}>Купить</a>-->
+<!--    </ul>-->
+<!--{% endfor %}-->
+<!--    </div>-->
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}<!--Наследует шаблон от base.html-->
+{% block body %}
+{% if tip == 'login'%}<!--Если тип логин-->
+<div class="container text-center">
+  <h2>Авторизоваться</h2>
+  <div class="d-flex justify-content-center">
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('login') }}" method=post>
+    <dl>
+      <dt>Логин:
+      <dd><input type=text name=username>
+      <dt>Пароль:
+      <dd><input type=password name=password>
+      <dd><input type=submit value=Войти>
+      <dd><a class="p-2 text-dark flex-fill" href="/register">Регистрация</a></dd>
+    </dl>
+  </form>
+    </div>
+  </div>
+{% endif%}
+{% if tip == 'register' and not session.logged_in %}<!--Если тип register и нет сессии авторизации, то клиент может зарегестрироваться-->
+<div class="container text-center">
+  <h2>Регистрация</h2>
+    <div class="d-flex justify-content-center">
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('register') }}" method=post>
+    <dl>
+      <dt>Фамилия Имя Отчество:
+      <dd><input type=text name=fio>
+      <dt>Логин:
+      <dd><input type=text name=login>
+      <dt>Пароль:
+      <dd><input type=password name=password>
+      <dd><input type=submit value=Зарегестрироваться>
+    </dl>
+  </form>
+{% endif%}
+  </div>
+  </div>
+{% endblock %}

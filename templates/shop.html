@@ -1,0 +1,139 @@
+{% extends 'base.html' %}<!--Наследование шаблона-->
+{% block body %}
+<div class="container-fluid bg-light"><!--Создание разметки для товаров-->
+    <div class="container">
+        {% if tip == 'item' %}
+        {% for i in item%}
+        <div class="album py-5 bg-light text-center">
+            <div class="container py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <img class="card-img-top"
+                                 data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
+                                 alt="Миниатюра [100% x225]" style="height: 225px; width: 100%; display: block;"
+                                 src="https://brilliant24.ru/files/cat/template_01.png" data-holder-rendered="true">
+                            <div class="card-body">
+                                <p class="card-text"><font style="vertical-align: inherit;"><font
+                                        style="vertical-align: inherit;">{{ i[0]}}
+                                </font><font style="vertical-align: inherit;"><br>id: {{ i[1] }}
+                                    <br>Цена - {{ i[2]}} <br>Наличие в магазинах:
+                                    {% for j in shops%}
+                                    <br>{{ j[0]}}, id - {{j[2]}}
+                                    <br>Количество: {{ j[1]}}
+                                    {% endfor %}
+
+                                </font></font></p>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="btn-group">
+                                        <form action="{{ url_for('item', id = i[1]) }}" method=post>
+                                            <dd>Количество</dd>
+                                            <dd><input type=text name=quantity></dd>
+                                            <dd>ID магазина, где хотите купить</dd>
+                                            <dd><input type=text name=id_shop></dd>
+                                            <dd><input type=submit value=добавить></dd>
+                                            </dl>
+                                        </form>
+                                        {% endfor %}
+                                        <!--                      <button type="button" class="btn btn-sm btn-outline-secondary"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Редактировать</font></font></button>-->
+                                    </div>
+                                    <!--                    <small class="text-muted"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">9 минут</font></font></small>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if tip == 'service' %}<!--Создание разметки для услуг-->
+    {% for i in item%}
+        <div class="album py-5 bg-light text-center">
+            <div class="container py-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <img class="card-img-top"
+                                 data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
+                                 alt="Миниатюра [100% x225]" style="height: 225px; width: 100%; display: block;"
+                                 src="https://brilliant24.ru/files/cat/template_01.png" data-holder-rendered="true">
+                            <div class="card-body">
+                                <p class="card-text"><font style="vertical-align: inherit;"><font
+                                        style="vertical-align: inherit;">
+                                    {{ i[0]}}
+                                </font><font style="vertical-align: inherit;"><br>id: {{ i[1] }}
+                                    <br>Цена - {{ i[2]}} р. <br>Наличие в магазинах:
+                                    {% for j in shops%}
+                                    <br>{{ j[0]}}, id - {{j[1]}}
+                                    {% endfor %}
+                                </font></font></p>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                    <div class="btn-group">
+                                        <form action="{{ url_for('service', id = i[1]) }}" method=post>
+                                            <dd>Количество</dd>
+                                            <dd><input type=text name=quantity></dd>
+                                            <dd>ID магазина, где хотите купить</dd>
+                                            <dd><input type=text name=id_shop></dd>
+                                            <dd><input type=submit value=добавить></dd>
+                                            </dl>
+                                        </form>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+    {% endfor %}
+    {% endif %}
+    {% if tip == 'checkout' %}<!--Если тип равен оплате-->
+        <h1>Корзина</h1>
+                <div class="album py-5 bg-light text-center">
+            <div class="container py-5">
+                <div class="row justify-content-center">
+    {% for i in items%}<!--Отображение всех предметов и услуг в корзине-->
+
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <img class="card-img-top"
+                                 data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
+                                 alt="Миниатюра [100% x225]" style="height: 225px; width: 100%; display: block;"
+                                 src="https://brilliant24.ru/files/cat/template_01.png" data-holder-rendered="true">
+                            <div class="card-body">
+                                <p class="card-text"><font style="vertical-align: inherit;"><font
+                                        style="vertical-align: inherit;">
+                                    {{ i[0]}}
+                                </font><font style="vertical-align: inherit;"><br>id: {{ i['id']}}
+                                    <br>тип - {{ i['tip']}} <br>цена - {{ i['price']}}<br>количество - {{ i['quantity']}}<br>id Магазина - {{i['shop']}}
+                                </font></font></p>
+                            </div>
+                        </div>
+                    </div>
+
+
+    <br>
+    {% endfor %}
+                                            <form action="{{ url_for('checkout') }}" method=post>
+        <dd><input type=submit value=оплатить></dd>
+        </dl>
+    </form>
+     <form action="{{ url_for('clean') }}" method=post>
+        <dd><input type=submit value=Очистить></dd>
+        </dl>
+    </form>
+                </div>
+            </div>
+            </div>
+<!--    <form action="{{ url_for('checkout') }}" method=post>-->
+<!--        <dd><input type=submit value=оплатить></dd>-->
+<!--        </dl>-->
+<!--    </form>-->
+<!--     <form action="{{ url_for('clean') }}" method=post>-->
+<!--        <dd><input type=submit value=Очистить></dd>-->
+<!--        </dl>-->
+<!--    </form>-->
+    {% endif %}
+            </div>
+</div>
+{% endblock %}

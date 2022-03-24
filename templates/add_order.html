@@ -1,0 +1,135 @@
+<!--Файл add_order.html, является файлом, в котором хранятся инструменты работников и администратора-->
+{% block body %}
+<h1>МеталлоРемонт</h1>
+{% if tip == 'service_admin' %} <!--Если сессия сервис администратоская, то администратор создает услугу в каталог-->
+    <form action="{{ url_for('add_service') }}" method=post>
+    <dl>
+      <dt>Имя услуги:
+        <dd><input type=text name=service_name>
+        <dd>Цена</dd>
+        <dd><input type=text name=price>
+        <dd><input type=submit value=Добавить>
+    </dl>
+    </form>
+{% endif %}
+{% if tip == 'service' %} <!--Обычный работник добавляет услугу, которую может выполнить-->
+    <form action="{{ url_for('add_service') }}" method=post>
+    <dl>
+      <dt>Id услуги:
+        <dd><input type=text name=service_id>
+        <dd><input type=submit value=Добавить>
+    </dl>
+    </form>
+{% endif %}
+{% if tip == 'not_admin' %}<!--Если тип сессии не администратора-->
+    <h1>К сожалению вы не администратор</h1>
+{% endif %}
+{% if tip == 'item_admin' %}<!--Если тип администратора, то он может добавить товар в БД-->
+    <h1>Товары</h1>
+    <form action="{{ url_for('add_item') }}" method=post><!--Отправляет значения-->
+    <dl>
+      <dt>Имя товара:
+        <dd><input type=text name=item_name>
+      <dt>Цена:
+        <dd><input type=text name=price>
+        <dd><input type=submit value=Добавить>
+    </dl>
+    </form>
+{% endif %}
+{% if tip == 'item_admin_shops' %}<!--Если сессия администратора, то он может добавить товары к магазинам, указав их количество-->
+    <h1>Товары</h1>
+    <form action="{{ url_for('add_item_shops') }}" method=post>
+    <dl>
+      <dt>ID товара:
+        <dd><input type=text name=item_name>
+      <dt>ID Магазина:
+        <dd><input type=text name=shop>
+      <dt>Количество:
+        <dd><input type=text name=quantity>
+        <dd><input type=submit value=Добавить>
+    </dl>
+    </form>
+    <form action="{{ url_for('edit_item_shops') }}" method=post><!--Может изменить количество-->
+    <dl>
+      <dt>ID товара:
+        <dd><input type=text name=item_name>
+      <dt>ID Магазина:
+        <dd><input type=text name=shop>
+      <dt>Количество:
+        <dd><input type=text name=quantity>
+        <dd><input type=submit value=ИзменитьКоличество>
+    </dl>
+    </form>
+{% endif %}
+{% if tip == 'order' %} <!--Показывает информацию об заказе работнику-->
+    <h1>Услуги</h1>
+    {% if service %}
+        {% for i in service %}
+        <h1>id услуги - {{i[0]}}, количество {{i[1]}}</h1>
+        {% endfor %}
+    {% endif %}
+    <h1>Товары</h1>
+    {% if item%}
+        {% for i in item%}
+            <h1>id товара - {{i[0]}}, количество {{i[2]}}</h1>
+        {% endfor %}
+    {% endif %}
+    {% if service%}
+        <form action="{{ url_for('panel_orders', id = ninja) }}" method=post>
+        <dl>
+            <dd><input type=submit value=Добавить> <!--Если в данном заказе есть услуга, то работник может принять заказ-->
+        </dl>
+        </form>
+    {% endif %}
+{% endif %}
+{% if tip == 'add_shop' %}<!--Администратор может добавлять магазины-->
+    <form action="{{ url_for('add_shop') }}" method=post>
+    <dl>
+        <dt>Адресс:
+        <dd><input type=text name=address>
+        <dd><input type=submit value=Добавить>
+    </dl>
+    </form>
+{% endif %}
+{% if tip == 'add_employers' %} <!--Администратор может добавлять работников к магазинам-->
+    <form action="{{ url_for('add_employers') }}" method=post>
+    <dl>
+        <dt>id магазина:
+        <dd><input type=text name=id_shop>
+        <dt>Логин работника:
+        <dd><input type=text name=employee>
+        <dd><input type=submit value=Добавить>
+    </dl>
+    </form>
+{% endif %}
+{% if tip == 'refresh' %}<!-- Администратор может обновить базу данных-->
+    <form action="{{ url_for('refresh') }}" method=post>
+    <dl>
+        <dd>Обновить базу данных?</dd>
+        <dd><input type=submit value=Обновить>
+    </dl>
+    </form>
+    <form action="{{ url_for('refreshing') }}" method=post>
+    <dl>
+        <dd>Обоновить базу данных листов магазинов и сотрудников?</dd>
+        <dd><input type=submit value=Обновить>
+    </dl>
+    </form>
+{% endif %}
+{% if tip == 'edit_item' %}<!--Администратор может изменить информацию об предметах-->
+    <h1>Обработка вещей</h1>
+     <form action="{{ url_for('edit_item') }}" method=post>
+    <dl>
+      <dt>ID товара:
+        <dd><input type=text name=item_name>
+      <dt>ID Магазина:
+        <dd><input type=text name=shop>
+      <dt>Количество:
+        <dd><input type=text name=quantity>
+      <dt>Цена:
+        <dd><input type=text name=price>
+        <dd><input type=submit value=Добавить>
+   </dl>
+    </form>
+{% endif %}
+{% endblock %}

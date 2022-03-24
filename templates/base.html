@@ -1,0 +1,40 @@
+<!doctype html><!--Базовый шаблон для других страниц сайта-->
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{{ url_for('static',filename='bootstrap/css/bootstrap.css') }}"><!--Подключение фрэймворка bootstrap-->
+    <title>{% block title %}{% endblock %}</title>
+
+
+    <div class="container-fluid bg-light border-bottom box-shadow" style="height: 70px;">
+        <div class="container-xl">
+            <div class="d-flex flex-lg-row align-items-center p-3 px-md-4 mb-3">
+              <h5 class="my-0 mr-md-auto font-weight-normal col-5">МеталлоРемонт</h5>
+              <nav class="my-0 my-md-0 mr-md-3 col">
+                <a class="p-2 text-dark col" href="/">Главная страница</a>
+                <a class="p-2 text-dark col" href="/catalog">Каталог</a>
+                <a class="p-2 text-dark col" href="/checkout">Корзина/Оформить заказ</a>
+              </nav>
+              <a class="btn btn-outline-primary pr-2" href="/inside">Личный кабинет</a>
+              <a class="btn btn-outline-primary" href="/login">Войти</a>
+
+            </div>
+        </div>
+    </div>
+</head>
+<body>
+    {% block body %}{% endblock %}
+    <footer class="container-fluid border-top box-shadow p-5">
+        <div class="d-flex justify-content-center">
+<!--            <p>Сайт был выполнен для курсового проекта <br> by <a href=""> Buldigirov Denislav</a></p>-->
+      <p>
+      </p>
+        </div>
+
+    </footer>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script><!--Подключение скриптов bootstrap-->
+</body>
+</html>
